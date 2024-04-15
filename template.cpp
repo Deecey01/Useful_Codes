@@ -24,7 +24,11 @@ typedef long long int ll;
 using namespace __gnu_pbds;
 template <class T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T> using ordered_multiset = tree<T , null_type ,  less_equal<T> , rb_tree_tag , tree_order_statistics_node_update>;
-
+void myerase(ordered_multiset<ll> &t, ll v){
+    ll rank = t.order_of_key(v); // Number of elements that are less than v in t
+    auto it = t.find_by_order(rank); // Iterator that points to the (rank+1)th element in t
+    t.erase(it);
+}
 ll binpow(ll a, ll b, ll m)
 {
     a %= m;
