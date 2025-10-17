@@ -149,4 +149,33 @@ def computeLPSArray(pat, M, lps):
 			else:
 				lps[i] = 0
 				i += 1
+#Disjoint Set Union
+class DSU:
+    def __init__(self, n):
+        # e[i] < 0 means i is a root and -e[i] is the size of the set
+        self.e = [-1] * n
+
+    def get(self, x):
+        # Path compression
+        if self.e[x] < 0:
+            return x
+        self.e[x] = self.get(self.e[x])
+        return self.e[x]
+
+    def same_set(self, x, y):
+        return self.get(x) == self.get(y)
+
+    def size(self, x):
+        return -self.e[self.get(x)]
+
+    def unite(self, x, y):
+        x, y = self.get(x), self.get(y)
+        if x == y:
+            return False
+        # Union by size
+        if self.e[x] > self.e[y]:
+            x, y = y, x
+        self.e[x] += self.e[y]
+        self.e[y] = x
+        return True
 
